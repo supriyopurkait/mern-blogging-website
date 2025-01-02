@@ -9,9 +9,10 @@ const blogStructure = {
   title: "",
   banner: "",
   content: [],
-  tages: "",
+  tags: [],
   des: "",
   author: { personal_info: {} },
+  draft: false,
 };
 
 export const EditoContext = createContext({});
@@ -26,7 +27,14 @@ const Editor = () => {
 
   return (
     <EditoContext.Provider
-      value={{ blog, setBlog,editorState, setEditorState, textEditor, setTextEditor }}
+      value={{
+        blog,
+        setBlog,
+        editorState,
+        setEditorState,
+        textEditor,
+        setTextEditor,
+      }}
     >
       {access_token === null ? (
         <Navigate to="/signin" />
