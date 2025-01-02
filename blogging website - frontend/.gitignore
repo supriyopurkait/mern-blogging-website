@@ -1,6 +1,6 @@
 # Node modules directory
 node_modules/
-
+src/common/firebase.jsx
 # Environment variable files
 .env
 .env.local
