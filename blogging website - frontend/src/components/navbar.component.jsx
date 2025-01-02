@@ -1,10 +1,11 @@
+// Navbar.jsx
 import { Link, Outlet } from "react-router-dom";
 import logo from "../imgs/dblog.webp";
 import { Search, PenLine, Bell } from "lucide-react";
-// import WalletConnect from "./wc";
 import { useContext, useState } from "react";
 import { UserContext } from "../App";
 import UserNavigationPanel from "./user-navigation.component";
+
 const Navbar = () => {
   const [searchboxvisibility, setSearchboxvisibility] = useState(false);
   const [userNavPanel, setUserNavPanel] = useState(false);
@@ -13,19 +14,14 @@ const Navbar = () => {
     setUserNavPanel((currentvalue) => !currentvalue);
   };
 
-    // const handelBlur = () =>{
-    //   setTimeout(()=>{
-    //     setUserNavPanel(false);
-    //   },200);
-    // }
-
   const {
     userAuth,
     userAuth: { access_token, profile_img },
   } = useContext(UserContext);
+
   return (
     <>
-      <nav className=" navbar">
+      <nav className="navbar">
         <Link to="/" className="flex-none w-11 md:w-16">
           <img src={logo} className="w-full" alt="Logo" />
         </Link>
@@ -47,13 +43,11 @@ const Navbar = () => {
         <div className="flex items-center gap-3 md:gap-6 ml-auto">
           <button
             className="md:hidden bg-grey w-12 h-12 rounded-full flex items-center justify-center"
-            onClick={() =>
-              setSearchboxvisibility((currentvalue) => !currentvalue)
-            }
+            onClick={() => setSearchboxvisibility((currentvalue) => !currentvalue)}
           >
-            <Search className=" absolute text-xl" />
+            <Search className="absolute text-xl" />
           </button>
-          <Link to="/editor" className=" hidden md:flex gap-2 link">
+          <Link to="/editor" className="hidden md:flex gap-2 link">
             <PenLine className="w-6" />
             <p>write...</p>
           </Link>
@@ -69,20 +63,18 @@ const Navbar = () => {
                 <button className="w-12 h-12 mt-1" onClick={handeluserNavPanel}>
                   <img
                     src={profile_img}
-                    className=" w-full h-full rounded-full object-cover"
+                    className="w-full h-full rounded-full object-cover"
                   />
                 </button>
               </div>
-              {userNavPanel ? <UserNavigationPanel /> : ""}
+              {userNavPanel ? <UserNavigationPanel setUserNavPanel={setUserNavPanel} /> : ""}
             </>
           ) : (
             <>
-              <Link className="btn-dark py-2 " to="/signin">
-                {/* <WalletConnect /> */}
+              <Link className="btn-dark py-2" to="/signin">
                 Sign In
               </Link>
               <Link className="btn-light py-2 hidden md:block" to="/signup">
-                {/* <WalletConnect /> */}
                 Sign UP
               </Link>
             </>
