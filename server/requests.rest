@@ -1,0 +1,25 @@
+
+
+POST http://localhost:3000/create-blog
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NzZiMTRhZTcwM2RmNTA1N2VhMDk4OCIsImlhdCI6MTczNTgzNjU2Mn0.sZKD-E0eRt7HEQ6GWgYDj0o7CNZHvvRg3tkIfymg8fk
+
+{
+  "title": "hello",
+  "banner":"smaple.img",
+  "des": " this is a short desc",
+  "content":{
+    "blocks":[1,2,3]
+  },
+  "tags":["tag","tags2"]
+}
+
+
+# POST http://localhost:3000/signin 
+# Content-Type: application/json
+
+# {
+#   "fullname": "John Doe",
+#   "email": "johndoe@example.com",
+#   "password": "Password123"
+# }
