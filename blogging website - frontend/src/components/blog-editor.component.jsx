@@ -12,7 +12,7 @@ const BlogEditor = () => {
   const [imgURL, setImgURL] = useState(null);
   let {
     blog,
-    blog: { title, banner, content, tages, des },
+    blog: { title, banner, content, tags, des },
     setBlog,
     textEditor,
     setTextEditor,
@@ -25,7 +25,7 @@ const BlogEditor = () => {
     setTextEditor(
       new EditorJS({
         holderId: textEditorForm,
-        data: "",
+        data: content,
         tools: tools,
         placeholder: "Let's write an awesome story",
       })
@@ -67,25 +67,33 @@ const BlogEditor = () => {
   };
 
   const handelPublishEvent = () => {
-    if(!banner.length){
+    if (!banner.length) {
       return toast.error("Upload a blog banner to publish.😘");
     }
     if (!title.length) {
       return toast.error("Write a blog title to publish.😊");
     }
     if (textEditor.isReady) {
-      textEditor.save().then((data) => {
-        if (data.blocks.length) {
-          setBlog({ ...blog, content: data });
-          setEditorState("publish");
-        }else{
-          return toast.error("Write a something.\n we like to know you😊");
-        }
-      }).catch((err)=>{
-        console.log(err);
-      });
+      textEditor
+        .save()
+        .then((data) => {
+          if (data.blocks.length) {
+            setBlog({ ...blog, content: data });
+            setEditorState("publish");
+          } else {
+            return toast.error("Write a something.\n we like to know you😊");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
+
+  const handelImageNullError =(e)=>{
+    let img = e.target;
+    img.src = defaultBanner
+  }
 
   return (
     <>
@@ -110,8 +118,9 @@ const BlogEditor = () => {
             <div className="relative aspect-video bg-white border-2 border-grey hover: opacity-80 ">
               <label htmlFor="uploadBanner">
                 <img
-                  src={imgURL == null ? defaultBanner : imgURL}
+                  src={banner}
                   className="z-20"
+                  onError={handelImageNullError}
                 />
                 <input
                   id="uploadBanner"
@@ -123,6 +132,7 @@ const BlogEditor = () => {
               </label>
             </div>
             <textarea
+              defaultValue={title}
               placeholder="Blog Title"
               className="text-4xl font-medium w-full h-20 outline-none resize-none my-10 leading-tight placeholder:opacity-40 text-center"
               onKeyDown={handelTitleKeyDown}
