@@ -1,26 +1,40 @@
-import { AnimatePresence, useSpring } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { PenLine } from "lucide-react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { UserContext } from "../App";
-import { removeFromSession } from "../common/session"; // Correct the path if necessary
+import { removeFromSession } from "../common/session";
 
-const UserNavigationPanel = () => {
+const UserNavigationPanel = ({ setUserNavPanel }) => {
   const {
     userAuth: { username },
     setUserAuth,
   } = useContext(UserContext);
+  
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setUserNavPanel(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [setUserNavPanel]);
 
   const signOutUser = () => {
     removeFromSession("user");
     setUserAuth({ access_token: null });
-  }
+  };
+
   return (
     <AnimatePresence
       transition={{ duration: 0.2 }}
-      className=" absolute right-0 z-50"
+      className="absolute right-0 z-50"
     >
-      <div className="bg-white absolute right-0 top-full z-50 border border-grey w-60 duration-200 mt-2 shadow-lg">
+      <div ref={navRef} className="bg-white absolute right-0 top-full z-50 border border-grey w-60 duration-200 mt-2 shadow-lg">
         <Link to="/editor" className="flex gap-2 link md:hidden pl-8 py-4">
           <PenLine />
           <p>write...</p>
