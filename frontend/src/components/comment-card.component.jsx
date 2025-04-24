@@ -22,7 +22,7 @@ const CommentCard = ({ index, leftVal, commentData }) => {
 
   const handleReplyClick = () => {
     if (!access_token) {
-      
+
       return toast.error("Please login first to reply");;
     }
     setIsReplying(preVal => !preVal);
@@ -39,7 +39,12 @@ const CommentCard = ({ index, leftVal, commentData }) => {
             <p className="min-w-fit">{getDay(commentedAt)}</p>
           </div>
 
-          <p className="font-gelasio text-xl ml-10">{comment}</p>
+          <p className="font-gelasio text-xl ml-10">{comment.split('\n').map((line, i) => (
+            <span key={i}>
+              {line}
+              <br />
+            </span>
+          ))}</p>
           {/*this is the reply and hide reply buttom and reply card part thats why it is commented */}
           {/* <div className="flex gap-5 items-center mt-5">
             {commentData.isReplyLoaded && (
